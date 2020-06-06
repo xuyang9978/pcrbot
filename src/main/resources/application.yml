@@ -1,0 +1,38 @@
+# tomcat端口号
+server:
+  port: 10086
+
+# spring配置
+spring:
+  cq:
+    # 在这里配置各个功能执行顺序
+    # 如果前一个功能返回MESSAGE_BLOCK，下一个功能不会被执行
+    # 如果前一个功能返回MESSAGE_IGNORE，会继续执行下一个功能
+    plugin-list:
+      - run.xuyang.pcrbot.plugin.PrefixPlugin
+      - run.xuyang.pcrbot.plugin.MenuPlugin
+      - run.xuyang.pcrbot.plugin.BotSwitchPlugin
+      - run.xuyang.pcrbot.plugin.CreateUnionPlugin
+      - run.xuyang.pcrbot.plugin.JoinUnionPlugin
+      - run.xuyang.pcrbot.plugin.OpenUnionBattlePlugin
+      - run.xuyang.pcrbot.plugin.ExitUnionPlugin
+      - run.xuyang.pcrbot.plugin.UnionBattlePlugin
+
+    # 下面配置event线程池，也可以删掉用默认的
+    event:
+      core-pool-size: 5
+      max-pool-size: 20
+      keep-alive-time: 2000
+      work-queue-size: 512
+
+  # 数据库连接信息
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/pcrbotdb?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    #username: root #本地测试用这个
+    username: pcrbotdb #服务器上这里自己设置
+    password: 12345
+
+# mybatis配置
+mybatis:
+  type-aliases-package: run.xuyang.entity
