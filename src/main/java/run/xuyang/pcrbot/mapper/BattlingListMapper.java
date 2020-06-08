@@ -20,7 +20,7 @@ public interface BattlingListMapper {
      * @param groupID 公会所在QQ群号
      * @return 该公会所有正在出刀记录
      */
-    @Select("select * from battling_list where group_id=#{groupID}")
+    @Select(" select * from battling_list where group_id=#{groupID} ")
     @Results(id = "battlingListMap", value = {
             @Result(id = true, column = "id", property = "id", javaType = Integer.class),
             @Result(column = "member_id", property = "memberID", javaType = Long.class),
@@ -35,7 +35,7 @@ public interface BattlingListMapper {
      *
      * @param groupID 公会所在QQ群号
      */
-    @Delete("delete from battling_list where group_id=#{groupID}")
+    @Delete(" delete from battling_list where group_id=#{groupID} ")
     void deleteAllBattlingListByGroupID(long groupID);
 
     /**
@@ -44,7 +44,7 @@ public interface BattlingListMapper {
      * @param userID 查询的成员QQ号
      * @return 该成员是否正在出刀
      */
-    @Select("select * from battling_list where member_id=#{userID} and group_id=#{groupID}")
+    @Select(" select * from battling_list where member_id=#{userID} and group_id=#{groupID} ")
     @ResultMap("battlingListMap")
     BattlingList findBattlingListByUserID(long userID, long groupID);
 
@@ -56,8 +56,8 @@ public interface BattlingListMapper {
      * @param whichOne 正在打哪个boss
      * @param rounds   正在打的boss是第几周目的
      */
-    @Insert("insert into battling_list(member_id, group_id, which_one, rounds)" +
-            "values(#{userID}, #{groupID}, #{whichOne}, #{rounds})")
+    @Insert(" insert into battling_list(member_id, group_id, which_one, rounds) " +
+            " values(#{userID}, #{groupID}, #{whichOne}, #{rounds}) ")
     void addBattling(long userID, long groupID, int whichOne, int rounds);
 
     /**
@@ -65,6 +65,6 @@ public interface BattlingListMapper {
      *
      * @param userID 要删除的成员QQ号
      */
-    @Delete("delete from battling_list where member_id=#{userID} and group_id=#{groupID}")
+    @Delete(" delete from battling_list where member_id=#{userID} and group_id=#{groupID} ")
     void deleteBattling(long userID, long groupID);
 }

@@ -21,7 +21,7 @@ public interface BattleLogMapper {
      * @param groupID 公会所在QQ群号
      * @return 该公会此次公会战的所有出刀记录
      */
-    @Select("select * from battle_log where group_id=#{groupID}")
+    @Select(" select * from battle_log where group_id=#{groupID} ")
     @Results(id = "battlesLogMap", value = {
             @Result(id = true, column = "id", property = "id", javaType = Integer.class),
             @Result(column = "member_id", property = "memberID", javaType = Long.class),
@@ -38,7 +38,7 @@ public interface BattleLogMapper {
      *
      * @param groupID 公会所在QQ群号
      */
-    @Delete("delete from battle_log where group_id = #{groupID}")
+    @Delete(" delete from battle_log where group_id = #{groupID} ")
     void deleteAllByGroupID(long groupID);
 
     /**
@@ -49,7 +49,7 @@ public interface BattleLogMapper {
      * @param rounds   第几周目
      * @return 该公会当天当前周目当前boss的出刀记录
      */
-    @Select("select * from battle_log where group_id=#{groupID} and which_one=#{whichOne} and rounds=#{rounds}")
+    @Select(" select * from battle_log where group_id=#{groupID} and which_one=#{whichOne} and rounds=#{rounds} ")
     @ResultMap("battlesLogMap")
     List<BattleLog> findCurrentBossBattleLog(long groupID, int whichOne, int rounds);
 
@@ -63,8 +63,8 @@ public interface BattleLogMapper {
      * @param whichOne   打的哪个boss
      * @param rounds     是第几周目的boss
      */
-    @Insert("insert into battle_log(member_id, group_id, damage, battle_date, which_one, rounds)" +
-            "values(#{userID}, #{groupID}, #{damage}, #{battleDate}, #{whichOne}, #{rounds})")
+    @Insert(" insert into battle_log(member_id, group_id, damage, battle_date, which_one, rounds) " +
+            " values(#{userID}, #{groupID}, #{damage}, #{battleDate}, #{whichOne}, #{rounds}) ")
     void addBattleLog(long userID, long groupID, int damage, Date battleDate, int whichOne, int rounds);
 
     /**
@@ -74,12 +74,12 @@ public interface BattleLogMapper {
      * @param userID 成员QQ号
      * @return 该成员当前的出刀次数
      */
-    @Select("select count(*) from battle_log " +
-            "where battle_date " +
-            "between date_add(from_unixtime(unix_timestamp(cast(sysdate()as date))), interval 4 hour) " +
-            "and date_add(from_unixtime(unix_timestamp(cast(sysdate()as date) + interval 1 day)), interval 4 hour) " +
-            "and member_id=#{userID} " +
-            "and group_id=#{groupID}")
+    @Select(" select count(*) from battle_log " +
+            " where battle_date " +
+            " between date_add(from_unixtime(unix_timestamp(cast(sysdate()as date))), interval 4 hour) " +
+            " and date_add(from_unixtime(unix_timestamp(cast(sysdate()as date) + interval 1 day)), interval 4 hour) " +
+            " and member_id=#{userID} " +
+            " and group_id=#{groupID} ")
     int countDayLogByUserID(long userID, long groupID);
 
     /**
@@ -88,12 +88,12 @@ public interface BattleLogMapper {
      * @param memberID 成员QQ号
      * @return 该成员当天的出刀记录
      */
-    @Select("select * from battle_log " +
-            "where battle_date " +
-            "between date_add(from_unixtime(unix_timestamp(cast(sysdate()as date))), interval 4 hour) " +
-            "and date_add(from_unixtime(unix_timestamp(cast(sysdate()as date) + interval 1 day)), interval 4 hour) " +
-            "and member_id=#{memberID} " +
-            "and group_id=#{groupID}")
+    @Select(" select * from battle_log " +
+            " where battle_date " +
+            " between date_add(from_unixtime(unix_timestamp(cast(sysdate()as date))), interval 4 hour) " +
+            " and date_add(from_unixtime(unix_timestamp(cast(sysdate()as date) + interval 1 day)), interval 4 hour) " +
+            " and member_id=#{memberID} " +
+            " and group_id=#{groupID} ")
     @ResultMap("battlesLogMap")
     List<BattleLog> findTodayBattleLogByUserID(Long memberID, long groupID);
 
@@ -103,7 +103,7 @@ public interface BattleLogMapper {
      * @param userID 成员QQ号
      * @return 该成员的所有出刀记录
      */
-    @Select("select * from battle_log where member_id=#{userID} and group_id=#{groupID}")
+    @Select(" select * from battle_log where member_id=#{userID} and group_id=#{groupID} ")
     @ResultMap("battlesLogMap")
     List<BattleLog> findAllBattleLogByUserID(Long userID, long groupID);
 }

@@ -19,7 +19,7 @@ public interface UnionsMapper {
      * @param groupID 群号
      * @return 该群的工会信息
      */
-    @Select("select * from unions where group_id=#{groupID}")
+    @Select(" select * from unions where group_id=#{groupID} ")
     @Results(id = "unionMap", value = {
             @Result(id = true, column = "id", property = "id", javaType = Integer.class),
             @Result(column = "union_name", property = "unionName", javaType = String.class),
@@ -35,7 +35,7 @@ public interface UnionsMapper {
      * @param unionName 公会名称
      * @param groupID 该公会的群号
      */
-    @Insert("insert into unions(union_name, group_id) values(#{unionName}, #{groupID})")
+    @Insert(" insert into unions(union_name, group_id) values(#{unionName}, #{groupID}) ")
     void addUnion(String unionName, long groupID);
 
     /**
@@ -44,13 +44,13 @@ public interface UnionsMapper {
      * @param groupID      群号
      * @param newUnionName 新的公会名
      */
-    @Update("update unions set union_name=#{newUnionName} where group_id=#{groupID}")
+    @Update(" update unions set union_name=#{newUnionName} where group_id=#{groupID} ")
     void updateUnionName(long groupID, String newUnionName);
 
     /**
      * 删除指定公会
      * @param groupID 公会所在QQ群号
      */
-    @Delete("delete from unions where group_id=#{groupID}")
+    @Delete(" delete from unions where group_id=#{groupID} ")
     void deleteUnion(long groupID);
 }

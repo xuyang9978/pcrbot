@@ -33,8 +33,8 @@ public class TreeListServiceImpl implements TreeListService {
     }
 
     @Override
-    public List<TreeList> findCurrentTreeList(long groupID, int whichOne, int rounds) {
-        return treeListMapper.findCurrentTreeList(groupID, whichOne, rounds);
+    public List<TreeList> findCurrentTreeList(long groupID, int whichOne, int rounds, int onTree) {
+        return treeListMapper.findCurrentTreeList(groupID, whichOne, rounds, onTree);
     }
 
     @Override

@@ -51,7 +51,7 @@ public interface BossListService {
     void updateBoss2Status(long groupID, int bossRemainHP, int nextOne);
 
     /**
-     * 更新指定公会boss2的血量
+     * 更新指定公会boss3的血量
      *
      * @param groupID      公会所在QQ群号
      * @param bossRemainHP boss当前剩余血量
@@ -69,7 +69,7 @@ public interface BossListService {
     void updateBoss4Status(long groupID, int bossRemainHP, int nextOne);
 
     /**
-     * 更新指定公会boss4的血量
+     * 更新指定公会boss5的血量
      *
      * @param groupID      公会所在QQ群号
      * @param bossRemainHP boss当前剩余血量
@@ -90,4 +90,43 @@ public interface BossListService {
      */
     void resetAllBossRemainHP(int boss1Hp, int boss2Hp, int boss3Hp, int boss4Hp, int boss5Hp, long groupID);
 
+    /**
+     * 更新rounds周目的boss1的血量,同时将该boss之前的boss血量修改为0,之后的boss血量修改为满血
+     *
+     * @param groupID     该群所在公会
+     * @param curHP       boss当前血量
+     * @param curRounds   当前周目数
+     * @param curWhichOne 下一个是第几个boss
+     */
+    void updateBoss1StatusWithRounds(long groupID, int curHP, int curRounds, int curWhichOne);
+
+    /**
+     * 更新rounds周目的boss2的血量,同时将该boss之前的boss血量修改为0,之后的boss血量修改为满血
+     *
+     * @param groupID     该群所在公会
+     * @param curHP       boss当前血量
+     * @param curRounds   当前周目数
+     * @param curWhichOne 下一个是第几个boss
+     */
+    void updateBoss2StatusWithRounds(long groupID, int curHP, int curRounds, int curWhichOne);
+
+    /**
+     * 更新rounds周目的boss3的血量,同时将该boss之前的boss血量修改为0,之后的boss血量修改为满血
+     *
+     * @param groupID     该群所在公会
+     * @param curHP       boss当前血量
+     * @param curRounds   当前周目数
+     * @param curWhichOne 下一个是第几个boss
+     */
+    void updateBoss3StatusWithRounds(long groupID, int curHP, int curRounds, int curWhichOne);
+
+    /**
+     * 更新rounds周目的boss4的血量,同时将该boss之前的boss血量修改为0,之后的boss血量修改为满血
+     *
+     * @param groupID     该群所在公会
+     * @param curHP       boss当前血量
+     * @param curRounds   当前周目数
+     * @param curWhichOne 下一个是第几个boss
+     */
+    void updateBoss4StatusWithRounds(long groupID, int curHP, int curRounds, int curWhichOne);
 }

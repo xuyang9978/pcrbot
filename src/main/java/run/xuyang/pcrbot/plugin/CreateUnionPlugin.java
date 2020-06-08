@@ -109,10 +109,12 @@ public class CreateUnionPlugin extends CQPlugin {
         // 处理其余指令
         // 再次从数据库中读取公会状态
         // 如果公会还没创建，那么后面与此次公会战相关的命令就不再处理了
-        if (null == unionsService.findUnionByGroupID(groupID)) {
-            return MESSAGE_BLOCK;
-        } else {
-            return MESSAGE_IGNORE;
-        }
+//        if (null == unionsService.findUnionByGroupID(groupID)) {
+//            return MESSAGE_BLOCK;
+//        } else {
+//            return MESSAGE_IGNORE;
+//        }
+        // 直接放行
+        return MESSAGE_IGNORE;
     }
 }

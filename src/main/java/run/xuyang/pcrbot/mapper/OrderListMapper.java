@@ -19,7 +19,7 @@ public interface OrderListMapper {
      * @param groupID 公会所在QQ群号
      * @return 该公会的所有预约出刀记录
      */
-    @Select("select * from order_list where group_id=#{groupID}")
+    @Select(" select * from order_list where group_id=#{groupID} ")
     @Results(id = "orderListMap", value = {
             @Result(id = true, column = "id", property = "id", javaType = Integer.class),
             @Result(column = "member_id", property = "memberID", javaType = Long.class),
@@ -35,7 +35,7 @@ public interface OrderListMapper {
      *
      * @param groupID 公会所在QQ群号
      */
-    @Delete("delete from order_list where group_id=#{groupID}")
+    @Delete(" delete from order_list where group_id=#{groupID} ")
     void deleteAllByGroupID(long groupID);
 
     /**
@@ -46,7 +46,7 @@ public interface OrderListMapper {
      * @param rounds   预约的第几周目的boss
      * @return 该公会当前的预约boss列表
      */
-    @Select("select * from order_list where group_id=#{groupID} and which_one=#{whichOne} and rounds=#{rounds}")
+    @Select(" select * from order_list where group_id=#{groupID} and which_one=#{whichOne} and rounds=#{rounds} ")
     @ResultMap("orderListMap")
     List<OrderList> findCurrentOrderList(long groupID, int whichOne, int rounds);
 
@@ -59,8 +59,8 @@ public interface OrderListMapper {
      * @param damage   预估伤害
      * @param rounds   预约的boss是当前周目还是下一周目的
      */
-    @Insert("insert into order_list(member_id, group_id, which_one, damage, rounds) " +
-            "values(#{userID}, #{groupID}, #{whichOne}, #{damage}, #{rounds})")
+    @Insert(" insert into order_list(member_id, group_id, which_one, damage, rounds) " +
+            " values(#{userID}, #{groupID}, #{whichOne}, #{damage}, #{rounds}) ")
     void addOrder(long userID, long groupID, int whichOne, int damage, int rounds);
 
     /**
@@ -72,10 +72,10 @@ public interface OrderListMapper {
      * @param rounds   当前boss的周目数
      * @return 预约了当前boss就返回预约对象，否则返回null
      */
-    @Select("select * from order_list where member_id=#{userID} " +
-            "and group_id=#{groupID} " +
-            "and which_one=#{whichOne} " +
-            "and rounds=#{rounds}")
+    @Select(" select * from order_list where member_id=#{userID} " +
+            " and group_id=#{groupID} " +
+            " and which_one=#{whichOne} " +
+            " and rounds=#{rounds} ")
     @ResultMap("orderListMap")
     List<OrderList> findCurrentOrderListByUserID(long userID, long groupID, int whichOne, int rounds);
 
@@ -84,9 +84,9 @@ public interface OrderListMapper {
      *
      * @param userID 成员QQ号
      */
-    @Delete("delete from order_list where member_id=#{userID} and group_id=#{groupID} " +
-            "order by id asc " +
-            "limit 1;")
+    @Delete(" delete from order_list where member_id=#{userID} and group_id=#{groupID} " +
+            " order by id asc " +
+            " limit 1 ")
     void deleteEarliestOneByUserID(long userID, long groupID);
 
     /**
@@ -95,7 +95,7 @@ public interface OrderListMapper {
      * @param userID 成员QQ号
      * @return 该成员的所有预约记录
      */
-    @Select("select * from order_list where member_id=#{userID} and group_id=#{groupID}")
+    @Select(" select * from order_list where member_id=#{userID} and group_id=#{groupID} ")
     @ResultMap("orderListMap")
     List<OrderList> findAllOrderListByUserID(long userID, long groupID);
 
@@ -104,6 +104,6 @@ public interface OrderListMapper {
      *
      * @param userID 成员QQ号
      */
-    @Delete("delete from order_list where member_id=#{userID} and group_id=#{groupID}")
+    @Delete(" delete from order_list where member_id=#{userID} and group_id=#{groupID} ")
     void deleteAllByUserID(long userID, long groupID);
 }

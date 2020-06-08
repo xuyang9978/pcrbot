@@ -20,7 +20,7 @@ public interface BossListMapper {
      * @param groupID 公会所在QQ群号
      * @return 该公会的boss列表
      */
-    @Select("select * from boss_list where group_id=#{groupID}")
+    @Select(" select * from boss_list where group_id=#{groupID} ")
     @Results(id = "bossListMap", value = {
             @Result(id = true, column = "id", property = "id", javaType = Integer.class),
             @Result(column = "rounds", property = "rounds", javaType = Integer.class),
@@ -44,7 +44,7 @@ public interface BossListMapper {
      *
      * @param groupID 公会所在QQ群号
      */
-    @Delete("delete from boss_list where group_id=#{groupID}")
+    @Delete(" delete from boss_list where group_id=#{groupID} ")
     void deleteAllByGroupID(long groupID);
 
     /**
@@ -52,7 +52,7 @@ public interface BossListMapper {
      *
      * @param groupID 公会所在QQ群号
      */
-    @Insert("insert into boss_list(group_id) values(#{groupID})")
+    @Insert(" insert into boss_list(group_id) values(#{groupID}) ")
     void addOneBossListByGroup(long groupID);
 
     /**
@@ -62,7 +62,7 @@ public interface BossListMapper {
      * @param bossRemainHP boss当前剩余血量
      * @param nextOne      下一个boss是谁
      */
-    @Update("update boss_list set boss1_remain_hp=#{bossRemainHP}, which_one=#{nextOne} where group_id=#{groupID}")
+    @Update(" update boss_list set boss1_remain_hp=#{bossRemainHP}, which_one=#{nextOne} where group_id=#{groupID} ")
     void updateBoss1Status(long groupID, int bossRemainHP, int nextOne);
 
     /**
@@ -72,7 +72,7 @@ public interface BossListMapper {
      * @param bossRemainHP boss当前剩余血量
      * @param nextOne      下一个boss是谁
      */
-    @Update("update boss_list set boss2_remain_hp=#{bossRemainHP}, which_one=#{nextOne} where group_id=#{groupID}")
+    @Update(" update boss_list set boss2_remain_hp=#{bossRemainHP}, which_one=#{nextOne} where group_id=#{groupID} ")
     void updateBoss2Status(long groupID, int bossRemainHP, int nextOne);
 
     /**
@@ -82,7 +82,7 @@ public interface BossListMapper {
      * @param bossRemainHP boss当前剩余血量
      * @param nextOne      下一个boss是谁
      */
-    @Update("update boss_list set boss3_remain_hp=#{bossRemainHP}, which_one=#{nextOne} where group_id=#{groupID}")
+    @Update(" update boss_list set boss3_remain_hp=#{bossRemainHP}, which_one=#{nextOne} where group_id=#{groupID} ")
     void updateBoss3Status(long groupID, int bossRemainHP, int nextOne);
 
     /**
@@ -92,7 +92,7 @@ public interface BossListMapper {
      * @param bossRemainHP boss当前剩余血量
      * @param nextOne      下一个boss是谁
      */
-    @Update("update boss_list set boss4_remain_hp=#{bossRemainHP}, which_one=#{nextOne} where group_id=#{groupID}")
+    @Update(" update boss_list set boss4_remain_hp=#{bossRemainHP}, which_one=#{nextOne} where group_id=#{groupID} ")
     void updateBoss4Status(long groupID, int bossRemainHP, int nextOne);
 
     /**
@@ -103,7 +103,7 @@ public interface BossListMapper {
      * @param nextOne      下一个boss是谁
      * @param nextRounds   下一周是多少
      */
-    @Update("update boss_list set boss5_remain_hp=#{bossRemainHP}, which_one=#{nextOne}, rounds=#{nextRounds} where group_id=#{groupID}")
+    @Update(" update boss_list set boss5_remain_hp=#{bossRemainHP}, which_one=#{nextOne}, rounds=#{nextRounds} where group_id=#{groupID} ")
     void updateBoss5StatusWithRounds(long groupID, int bossRemainHP, int nextOne, int nextRounds);
 
     /**
@@ -118,4 +118,52 @@ public interface BossListMapper {
     @Update(" update boss_list set boss1_remain_hp=#{boss1Hp}, boss2_remain_hp=#{boss2Hp}, boss3_remain_hp=#{boss3Hp}, " +
             " boss4_remain_hp=#{boss4Hp}, boss5_remain_hp=#{boss5Hp} where group_id=#{groupID}")
     void resetAllBossRemainHP(int boss1Hp, int boss2Hp, int boss3Hp, int boss4Hp, int boss5Hp, long groupID);
+
+    /**
+     * 更新rounds周目的boss1的血量,同时将该boss之前的boss血量修改为0,之后的boss血量修改为满血
+     *
+     * @param groupID     该群所在公会
+     * @param curHP       boss当前血量
+     * @param curRounds   当前周目数
+     * @param curWhichOne 下一个是第几个boss
+     */
+    @Update(" update boss_list set boss1_remain_hp=#{curHP}, boss2_remain_hp=800, boss3_remain_hp=1000, " +
+            " boss4_remain_hp=1200, boss5_remain_hp=2000, rounds=#{curRounds}, which_one=#{curWhichOne} where group_id=#{groupID}")
+    void updateBoss1StatusWithRounds(long groupID, int curHP, int curRounds, int curWhichOne);
+
+    /**
+     * 更新rounds周目的boss2的血量,同时将该boss之前的boss血量修改为0,之后的boss血量修改为满血
+     *
+     * @param groupID     该群所在公会
+     * @param curHP       boss当前血量
+     * @param curRounds   当前周目数
+     * @param curWhichOne 下一个是第几个boss
+     */
+    @Update(" update boss_list set boss2_remain_hp=#{curHP}, boss1_remain_hp=0, boss3_remain_hp=1000, " +
+            " boss4_remain_hp=1200, boss5_remain_hp=2000, rounds=#{curRounds}, which_one=#{curWhichOne} where group_id=#{groupID}")
+    void updateBoss2StatusWithRounds(long groupID, int curHP, int curRounds, int curWhichOne);
+
+    /**
+     * 更新rounds周目的boss3的血量,同时将该boss之前的boss血量修改为0,之后的boss血量修改为满血
+     *
+     * @param groupID     该群所在公会
+     * @param curHP       boss当前血量
+     * @param curRounds   当前周目数
+     * @param curWhichOne 下一个是第几个boss
+     */
+    @Update(" update boss_list set boss3_remain_hp=#{curHP}, boss1_remain_hp=0, boss2_remain_hp=0, " +
+            " boss4_remain_hp=1200, boss5_remain_hp=2000, rounds=#{curRounds}, which_one=#{curWhichOne} where group_id=#{groupID}")
+    void updateBoss3StatusWithRounds(long groupID, int curHP, int curRounds, int curWhichOne);
+
+    /**
+     * 更新rounds周目的boss4的血量,同时将该boss之前的boss血量修改为0,之后的boss血量修改为满血
+     *
+     * @param groupID     该群所在公会
+     * @param curHP       boss当前血量
+     * @param curRounds   当前周目数
+     * @param curWhichOne 下一个是第几个boss
+     */
+    @Update(" update boss_list set boss4_remain_hp=#{curHP}, boss1_remain_hp=0, boss2_remain_hp=0, " +
+            " boss3_remain_hp=0, boss5_remain_hp=2000, rounds=#{curRounds}, which_one=#{curWhichOne} where group_id=#{groupID}")
+    void updateBoss4StatusWithRounds(long groupID, int curHP, int curRounds, int curWhichOne);
 }

@@ -65,4 +65,24 @@ public class BossListServiceImpl implements BossListService {
         bossListMapper.resetAllBossRemainHP(boss1Hp, boss2Hp, boss3Hp, boss4Hp, boss5Hp, groupID);
     }
 
+    @Override
+    public void updateBoss1StatusWithRounds(long groupID, int curHP, int curRounds, int curWhichOne) {
+        bossListMapper.updateBoss1StatusWithRounds(groupID, curHP, curRounds, curWhichOne);
+    }
+
+    @Override
+    public void updateBoss2StatusWithRounds(long groupID, int curHP, int curRounds, int curWhichOne) {
+        bossListMapper.updateBoss2StatusWithRounds(groupID, curHP, curRounds, curWhichOne);
+    }
+
+    @Override
+    public void updateBoss3StatusWithRounds(long groupID, int curHP, int curRounds, int curWhichOne) {
+        bossListMapper.updateBoss3StatusWithRounds(groupID, curHP, curRounds, curWhichOne);
+    }
+
+    @Override
+    public void updateBoss4StatusWithRounds(long groupID, int curHP, int curRounds, int curWhichOne) {
+        bossListMapper.updateBoss4StatusWithRounds(groupID, curHP, curRounds, curWhichOne);
+    }
+
 }

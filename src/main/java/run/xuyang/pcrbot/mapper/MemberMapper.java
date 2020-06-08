@@ -19,7 +19,7 @@ public interface MemberMapper {
      * @param groupID 群号
      * @return 该群(公会)的所有成员
      */
-    @Select("select * from member where group_id=#{groupID}")
+    @Select(" select * from member where group_id=#{groupID} ")
     @Results(id = "memberMap", value = {
             @Result(id = true, column = "id", property = "id", javaType = Integer.class),
             @Result(column = "member_id", property = "memberID", javaType = Long.class),
@@ -32,7 +32,7 @@ public interface MemberMapper {
      *
      * @param userID 用户QQ号
      */
-    @Select("select * from member where member_id=#{userID} and group_id=#{groupID}")
+    @Select(" select * from member where member_id=#{userID} and group_id=#{groupID} ")
     @ResultMap("memberMap")
     Member findMemberByUserID(long userID, long groupID);
 
@@ -41,7 +41,7 @@ public interface MemberMapper {
      *
      * @param userID 用户QQ号
      */
-    @Insert("insert into member(member_id, group_id) values(#{userID}, #{groupID})")
+    @Insert(" insert into member(member_id, group_id) values(#{userID}, #{groupID}) ")
     void addMember(long userID, long groupID);
 
     /**
@@ -50,7 +50,7 @@ public interface MemberMapper {
      * @param groupID 公会所在QQ群号
      * @return 该公会的所有成员
      */
-    @Select("select * from member where group_id=#{groupID}")
+    @Select(" select * from member where group_id=#{groupID} ")
     @ResultMap("memberMap")
     List<Member> findMemberByGroupID(long groupID);
 
@@ -59,7 +59,7 @@ public interface MemberMapper {
      *
      * @param groupID 公会所在QQ群号
      */
-    @Delete("delete from member where group_id=#{groupID}")
+    @Delete(" delete from member where group_id=#{groupID} ")
     void deleteAllByGroupID(long groupID);
 
     /**
@@ -67,7 +67,7 @@ public interface MemberMapper {
      *
      * @param userID 成员QQ号
      */
-    @Delete("delete from member where member_id=#{userID} and group_id=#{groupID}")
+    @Delete(" delete from member where member_id=#{userID} and group_id=#{groupID} ")
     void deleteMemberByUserID(long userID, long groupID);
 
     /**
@@ -76,6 +76,6 @@ public interface MemberMapper {
      * @param groupID 公会所在QQ群号
      * @return 该公会的当前在会人数
      */
-    @Select("select count(*) from member where group_id=#{groupID}")
+    @Select(" select count(*) from member where group_id=#{groupID} ")
     int countByGroupID(long groupID);
 }

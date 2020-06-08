@@ -17,7 +17,7 @@ public interface BotStatusMapper {
      * @param groupID 群号
      * @return 机器人状态对象
      */
-    @Select("select * from bot_status where group_id=#{groupID}")
+    @Select(" select * from bot_status where group_id=#{groupID} ")
     @Results(id = "botMap", value = {
             @Result(id = true, column = "id", property = "id", javaType = Integer.class),
             @Result(column = "group_id", property = "groupID", javaType = Long.class),
@@ -31,7 +31,7 @@ public interface BotStatusMapper {
      * @param groupID 群号
      * @param status  该群机器人状态
      */
-    @Insert("insert into bot_status(group_id, group_bot_status) values(#{groupID}, #{status})")
+    @Insert(" insert into bot_status(group_id, group_bot_status) values(#{groupID}, #{status}) ")
     void addBotToGroup(long groupID, int status);
 
     /**
@@ -40,6 +40,6 @@ public interface BotStatusMapper {
      * @param groupID 群号
      * @param status  该群机器人状态
      */
-    @Update("update bot_status set group_bot_status=#{status} where group_id=#{groupID}")
+    @Update(" update bot_status set group_bot_status=#{status} where group_id=#{groupID} ")
     void updateBotByGroupID(long groupID, int status);
 }

@@ -34,9 +34,10 @@ public interface TreeListService {
      * @param groupID  公会所在QQ群号
      * @param whichOne 哪一个boss挂树
      * @param rounds   第几周目的boss挂树
+     * @param onTree   挂树中
      * @return 该公会当前的挂树列表
      */
-    List<TreeList> findCurrentTreeList(long groupID, int whichOne, int rounds);
+    List<TreeList> findCurrentTreeList(long groupID, int whichOne, int rounds, int onTree);
 
     /**
      * 查询指定成员在当前boss是否挂树
@@ -72,7 +73,7 @@ public interface TreeListService {
     /**
      * 查询指定成员的所有挂树记录
      *
-     * @param userID 成员QQ号
+     * @param userID  成员QQ号
      * @param groupID 成员所在QQ号
      * @return 该成员的所有挂树记录
      */

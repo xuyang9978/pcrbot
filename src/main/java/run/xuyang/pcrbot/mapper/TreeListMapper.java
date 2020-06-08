@@ -19,7 +19,7 @@ public interface TreeListMapper {
      * @param groupID 公会所在QQ群号
      * @return 该公会所欲挂树成员
      */
-    @Select("select * from tree_list where group_id=#{groupID}")
+    @Select(" select * from tree_list where group_id=#{groupID} ")
     @Results(id = "treeListMap", value = {
             @Result(id = true, column = "id", property = "id", javaType = Integer.class),
             @Result(column = "member_id", property = "memberID", javaType = Long.class),
@@ -35,7 +35,7 @@ public interface TreeListMapper {
      *
      * @param groupID 公会所在QQ群号
      */
-    @Delete("delete from tree_list where group_id=#{groupID}")
+    @Delete(" delete from tree_list where group_id=#{groupID} ")
     void deleteAllByGroupID(long groupID);
 
     /**
@@ -46,9 +46,10 @@ public interface TreeListMapper {
      * @param rounds   第几周目的boss挂树
      * @return 该公会当前的挂树列表
      */
-    @Select("select * from tree_list where group_id=#{groupID} and which_one=#{whichOne} and rounds=#{rounds}")
+    @Select(" select * from tree_list where group_id=#{groupID} " +
+            " and which_one=#{whichOne} and rounds=#{rounds} and status=#{onTree} ")
     @ResultMap("treeListMap")
-    List<TreeList> findCurrentTreeList(long groupID, int whichOne, int rounds);
+    List<TreeList> findCurrentTreeList(long groupID, int whichOne, int rounds, int onTree);
 
     /**
      * 查询指定成员在当前boss是否挂树
@@ -57,7 +58,7 @@ public interface TreeListMapper {
      * @param status 挂树状态
      * @return 如果正在挂树中则返回该对象，否则返回null
      */
-    @Select("select * from tree_list where member_id=#{userID} and group_id=#{groupID} and status=#{status}")
+    @Select(" select * from tree_list where member_id=#{userID} and group_id=#{groupID} and status=#{status} ")
     @ResultMap("treeListMap")
     TreeList findCurrentTreeListByUserID(long userID, long groupID, int status);
 
@@ -69,8 +70,8 @@ public interface TreeListMapper {
      * @param whichOne 挂在第几个boss身上
      * @param rounds   这个boss是第几周目的
      */
-    @Insert("insert into tree_list(member_id, group_id, which_one, rounds)" +
-            "values(#{userID}, #{groupID}, #{whichOne}, #{rounds})")
+    @Insert(" insert into tree_list(member_id, group_id, which_one, rounds) " +
+            " values(#{userID}, #{groupID}, #{whichOne}, #{rounds}) ")
     void addHangingTree(long userID, long groupID, int whichOne, int rounds);
 
     /**
@@ -81,7 +82,7 @@ public interface TreeListMapper {
      * @param whichOne 是哪一个boss
      * @param rounds   第几周目的
      */
-    @Update("update tree_list set status=#{status} where member_id=#{userID} and group_id=#{groupID} and which_one=#{whichOne} and rounds=#{rounds}")
+    @Update(" update tree_list set status=#{status} where member_id=#{userID} and group_id=#{groupID} and which_one=#{whichOne} and rounds=#{rounds} ")
     void updateHangingToDown(int status, long userID, long groupID, int whichOne, int rounds);
 
     /**
@@ -90,7 +91,7 @@ public interface TreeListMapper {
      * @param userID 成员QQ号
      * @return 该成员的所有挂树记录
      */
-    @Select("select * from tree_list where member_id=#{userID} and group_id=#{groupID}")
+    @Select(" select * from tree_list where member_id=#{userID} and group_id=#{groupID} ")
     @ResultMap("treeListMap")
     List<TreeList> findAllTreeListByUserID(Long userID, long groupID);
 }
