@@ -11,6 +11,7 @@ spring:
     # 如果前一个功能返回MESSAGE_IGNORE，会继续执行下一个功能
     plugin-list:
       - run.xuyang.pcrbot.plugin.PrefixPlugin
+      - run.xuyang.pcrbot.plugin.MenuPlugin
       - run.xuyang.pcrbot.plugin.BotSwitchPlugin
       - run.xuyang.pcrbot.plugin.CreateUnionPlugin
       - run.xuyang.pcrbot.plugin.JoinUnionPlugin

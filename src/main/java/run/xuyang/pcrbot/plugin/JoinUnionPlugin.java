@@ -63,7 +63,7 @@ public class JoinUnionPlugin extends CQPlugin {
         }
         // 判断是否入会来确定是否要继续往下执行后面的命令
         if (null == memberService.findMemberByUserID(userID, groupID)) {
-            cq.sendGroupMsg(groupID, CQCode.at(userID) + "要想使用会战相关命令,请先使用入会命令加入公会!", false);
+            //cq.sendGroupMsg(groupID, CQCode.at(userID) + "要想使用会战相关命令,请先使用入会命令加入公会!", false);
             return MESSAGE_BLOCK;
         } else {
             return MESSAGE_IGNORE;
