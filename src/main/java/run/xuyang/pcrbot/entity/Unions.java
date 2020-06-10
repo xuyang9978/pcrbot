@@ -29,9 +29,4 @@ public class Unions implements Serializable {
      */
     private Long groupID;
 
-    /**
-     * 一个公会可以有多个成员
-     */
-    private List<Member> members;
-
 }

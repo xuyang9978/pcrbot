@@ -38,7 +38,7 @@ public class ExitUnionPlugin extends CQPlugin {
         Unions unions = unionsService.findUnionByGroupID(groupID);
         String msg = event.getMessage();
 
-        if ("退会".equals(msg)) {
+        if (msg.contains("退会")) {
             if (null == member) {
                 cq.sendGroupMsg(
                         groupID,

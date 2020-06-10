@@ -5,6 +5,9 @@ import net.lz1998.cq.robot.CQPlugin;
 import net.lz1998.cq.robot.CoolQ;
 import net.lz1998.cq.utils.CQCode;
 import org.springframework.stereotype.Component;
+import run.xuyang.pcrbot.entity.Unions;
+import run.xuyang.pcrbot.service.MemberService;
+import run.xuyang.pcrbot.service.UnionsService;
 
 /**
  * 菜单
@@ -15,17 +18,28 @@ import org.springframework.stereotype.Component;
 @Component
 public class MenuPlugin extends CQPlugin {
 
+    private final UnionsService unionsService;
+
+    private final MemberService memberService;
+
+    public MenuPlugin(UnionsService unionsService, MemberService memberService) {
+        this.unionsService = unionsService;
+        this.memberService = memberService;
+    }
+
+
     @Override
     public int onGroupMessage(CoolQ cq, CQGroupMessageEvent event) {
         String msg = event.getMessage();
         long groupID = event.getGroupId();
         long userID = event.getSender().getUserId();
 
-        if ("菜单".equals(msg)) {
+        if (msg.contains("菜单")) {
             String menu = "\n说明：命令后面带有*号表示需要管理员或者群主才能开启的命令，**表示只有群主能使用的命令，使用命令时不需要加*号" + "\n" +
                     "#开启机器人*：开启后才能所有功能" + "\n" +
                     "#关闭机器人*：关闭后除了菜单功能都不能再使用，但会保留关闭之前的所有数据" + "\n" +
                     "#创建公会 公会名字*：创建后才能开始进行公会战，例如：“创建公会 樱花庄”" + "\n" +
+                    "#多少人了：查看当前有多少人加入公会了" + "\n" +
                     "#入会：成员加入公会，这个命令是后面所有命令的前提条件" + "\n" +
                     "#结束会战*：结束此次公会战并解散公会，但是会保留此次会战的记录，直到下一次创建公会" + "\n" +
                     "#开启会战*：开启后机器人会初始化boss信息" + "\n" +
@@ -45,6 +59,17 @@ public class MenuPlugin extends CQPlugin {
                     "#今日出刀情况 @要查看信息的人：查看@的人的今日出刀记录，不@表示查看所有成员的今日出刀记录，如果要查看已经退出了公会的成员的数据请加上@参数" + "\n" +
                     "#会战总况 @要查看信息的人：查看@的人的此次会战公会战情况，不@表示查看所有成员的此次会战情况，如果要查看已经退出了公会的成员的数据请加上@参数" + "\n";
             cq.sendGroupMsg(groupID, CQCode.at(userID) + menu, false);
+        } else if (msg.contains("多少人了")) {
+            Unions union = unionsService.findUnionByGroupID(groupID);
+            if (union == null) {
+                cq.sendGroupMsg(groupID,
+                        CQCode.at(userID) + "该群公会还没有创建哟，暂时没有成员！",
+                        false);
+            } else {
+                cq.sendGroupMsg(groupID, CQCode.at(userID) +
+                        "公会\"" + union.getUnionName() + "\"目前成员数: " + memberService.countByGroupID(groupID) + " / 30",
+                        false);
+            }
         }
         return MESSAGE_IGNORE;
     }

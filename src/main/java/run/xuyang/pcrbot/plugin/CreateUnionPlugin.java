@@ -58,7 +58,7 @@ public class CreateUnionPlugin extends CQPlugin {
         String[] parameters = StringUtils.trimStrArr(msg);
 
         Unions unions = unionsService.findUnionByGroupID(groupID);
-        if ("创建公会".equals(parameters[0])) {
+        if (parameters[0].contains("创建公会")) {
             if ("member".equals(permission)) {
                 cq.sendGroupMsg(groupID, CQCode.at(userID) + "对不起，你没有权限使用此命令！", false);
             } else {
@@ -92,7 +92,7 @@ public class CreateUnionPlugin extends CQPlugin {
                     }
                 }
             }
-        } else if ("结束会战".equals(parameters[0])) {
+        } else if (parameters[0].contains("结束会战")) {
             if ("member".equals(permission)) {
                 cq.sendGroupMsg(groupID, CQCode.at(userID) + "对不起，你没有权限使用此命令！", false);
             } else {

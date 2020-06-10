@@ -23,9 +23,7 @@ public interface UnionsMapper {
     @Results(id = "unionMap", value = {
             @Result(id = true, column = "id", property = "id", javaType = Integer.class),
             @Result(column = "union_name", property = "unionName", javaType = String.class),
-            @Result(column = "group_id", property = "groupID", javaType = Long.class),
-            @Result(column = "id", property = "members", javaType = List.class,
-                    many = @Many(select = "run.xuyang.pcrbot.mapper.MemberMapper.findAllMembersByGroupId"))
+            @Result(column = "group_id", property = "groupID", javaType = Long.class)
     })
     Unions findUnionByGroupID(long groupID);
 

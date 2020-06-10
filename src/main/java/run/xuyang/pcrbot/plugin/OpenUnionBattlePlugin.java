@@ -38,7 +38,7 @@ public class OpenUnionBattlePlugin extends CQPlugin {
         long userID = event.getSender().getUserId();
         String permission = event.getSender().getRole();
 
-        if ("开启会战".equals(msg)) {
+        if (msg.contains("开启会战")) {
 
             if ("member".equals(permission)) {
                 cq.sendGroupMsg(groupID, CQCode.at(userID) + "对不起，你没有权限使用此命令！", false);

@@ -39,7 +39,7 @@ public class JoinUnionPlugin extends CQPlugin {
         Unions unions = unionsService.findUnionByGroupID(groupID);
         String msg = event.getMessage();
 
-        if ("入会".equals(msg)) {
+        if (msg.contains("入会")) {
             if (null == unions) {
                 cq.sendGroupMsg(groupID, CQCode.at(userID) + "对不起，管理员还没有创建公会，请联系管理员创建公会后再入会！", false);
             } else {

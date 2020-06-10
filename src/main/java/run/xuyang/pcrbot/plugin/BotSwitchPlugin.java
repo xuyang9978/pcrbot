@@ -34,7 +34,7 @@ public class BotSwitchPlugin extends CQPlugin {
 
 
         BotStatus botStatus = botStatusService.findGroupByGroupID(groupID);
-        if ("开启机器人".equals(msg)) {
+        if (msg.contains("开启机器人")) {
             if ("member".equals(permission)) {
                 cq.sendGroupMsg(groupID, CQCode.at(userID) + "对不起，你没有权限使用此命令！", false);
             } else {
@@ -50,7 +50,7 @@ public class BotSwitchPlugin extends CQPlugin {
                     cq.sendGroupMsg(groupID, CQCode.at(userID) + "开启成功！", false);
                 }
             }
-        } else if ("关闭机器人".equals(msg)) {
+        } else if (msg.contains("关闭机器人")) {
             if ("member".equals(permission)) {
                 cq.sendGroupMsg(groupID, CQCode.at(userID) + "对不起，你没有权限使用此命令！", false);
             } else {
