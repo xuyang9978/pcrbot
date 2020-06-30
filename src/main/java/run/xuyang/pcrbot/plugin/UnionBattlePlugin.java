@@ -1,6 +1,9 @@
 package run.xuyang.pcrbot.plugin;
 
+import net.lz1998.cq.CQGlobal;
 import net.lz1998.cq.event.message.CQGroupMessageEvent;
+import net.lz1998.cq.retdata.ApiData;
+import net.lz1998.cq.retdata.GroupMemberInfoData;
 import net.lz1998.cq.robot.CQPlugin;
 import net.lz1998.cq.robot.CoolQ;
 import net.lz1998.cq.utils.CQCode;
@@ -226,18 +229,27 @@ public class UnionBattlePlugin extends CQPlugin {
                 msgBuilder.append("当前预约老").append(whichOne).append("的记录一共有：").append(orderLists.size()).append("条，分别是：").append("\n");
                 index = 1;
                 for (OrderList orderList : orderLists) {
-                    msgBuilder.append(index++).append("、").append(CQCode.at(orderList.getMemberID())).append("，预估伤害：").append(orderList.getDamage()).append("w\n");
+                    msgBuilder
+                            .append(index++)
+                            .append("、")
+                            .append(cq.getGroupMemberInfo(groupID, orderList.getMemberID(), false).getData().getNickname())
+                            .append("，预估伤害：")
+                            .append(orderList.getDamage())
+                            .append("w\n");
                 }
                 msgBuilder.append("当前正在出刀老").append(whichOne).append("的人一共有：").append(battlingLists.size()).append("位，分别是：").append("\n");
                 for (BattlingList battlingList : battlingLists) {
-                    msgBuilder.append(CQCode.at(battlingList.getMemberID()));
+                    msgBuilder
+                            .append(cq.getGroupMemberInfo(groupID, battlingList.getMemberID(), false).getData().getNickname());
                 }
                 if (battlingLists.size() > 0) {
                     msgBuilder.append("\n");
                 }
                 msgBuilder.append("当前挂树").append("的人一共有：").append(treeLists.size()).append("位，分别是：").append("\n");
                 for (TreeList treeList : treeLists) {
-                    msgBuilder.append(CQCode.at(treeList.getMemberID()));
+                    msgBuilder
+                            .append(" @")
+                            .append(cq.getGroupMemberInfo(groupID, treeList.getMemberID(), false).getData().getNickname());
                 }
                 if (treeLists.size() > 0) {
                     msgBuilder.append("\n");
@@ -245,7 +257,13 @@ public class UnionBattlePlugin extends CQPlugin {
                 msgBuilder.append("当前老").append(whichOne).append("已出刀数共有：").append(battleLogs.size()).append("刀，分别是：").append("\n");
                 index = 1;
                 for (BattleLog battleLog : battleLogs) {
-                    msgBuilder.append(index++).append("、").append(CQCode.at(battleLog.getMemberID())).append("伤害：").append(battleLog.getDamage()).append("w\n");
+                    msgBuilder
+                            .append(index++)
+                            .append("、")
+                            .append(cq.getGroupMemberInfo(groupID, battleLog.getMemberID(), false).getData().getNickname())
+                            .append(" 伤害：")
+                            .append(battleLog.getDamage())
+                            .append("w\n");
                 }
                 if (battleLogs.size() > 0) {
                     msgBuilder.append("\n");
@@ -362,8 +380,16 @@ public class UnionBattlePlugin extends CQPlugin {
                     List<OrderList> orderLists = orderListService.findAllOrderListByGroup(groupID);
                     msgBuilder.append("当前公会所有预约记录有").append(orderLists.size()).append("条，分别是：").append("\n");
                     for (OrderList orderList : orderLists) {
-                        msgBuilder.append(index++).append("、").append(CQCode.at(orderList.getMemberID())).append("预约了第").append(orderList.getRounds())
-                                .append("周目的老").append(orderList.getWhichOne()).append("，预估伤害：").append(orderList.getDamage()).append("w\n");
+                        msgBuilder
+                                .append(index++)
+                                .append("、")
+                                .append(cq.getGroupMemberInfo(groupID, orderList.getMemberID(), false).getData().getNickname())
+                                .append(" 预约了第")
+                                .append(orderList.getRounds())
+                                .append("周目的老")
+                                .append(orderList.getWhichOne())
+                                .append("，预估伤害：")
+                                .append(orderList.getDamage()).append("w\n");
                     }
                     cq.sendGroupMsg(groupID, CQCode.at(userID) + msgBuilder.toString(), false);
                 } else if (parameters.length == 2) {
@@ -917,12 +943,28 @@ public class UnionBattlePlugin extends CQPlugin {
                 index = index1 = 1;
                 // 先判断是否有出刀记录
                 if (everyBodyTodayBattlelog.get(member).size() > 0) {
-                    msgBuilder.append(index++).append("、").append(CQCode.at(member.getMemberID())).append("今日已出刀数为：")
-                            .append(everyBodyTodayBattlelog.get(member).size()).append("刀，分别为：").append("\n");
+                    msgBuilder
+                            .append(index++)
+                            .append("、")
+                            .append(cq.getGroupMemberInfo(groupID, member.getMemberID(), false).getData().getNickname())
+                            .append(" 今日已出刀数为：")
+                            .append(everyBodyTodayBattlelog.get(member).size())
+                            .append("刀，分别为：")
+                            .append("\n");
                     for (BattleLog battleLog : everyBodyTodayBattlelog.get(member)) {
-                        msgBuilder.append("--").append("第").append(index1++).append("刀：于时间").append(sdf.format(battleLog.getBattleDate()))
-                                .append("出刀第").append(battleLog.getRounds()).append("周目的老").append(battleLog.getWhichOne())
-                                .append("，造成伤害：").append(battleLog.getDamage()).append("w\n");
+                        msgBuilder
+                                .append("--")
+                                .append("第")
+                                .append(index1++)
+                                .append("刀：于时间")
+                                .append(sdf.format(battleLog.getBattleDate()))
+                                .append("出刀第")
+                                .append(battleLog.getRounds())
+                                .append("周目的老")
+                                .append(battleLog.getWhichOne())
+                                .append("，造成伤害：")
+                                .append(battleLog.getDamage())
+                                .append("w\n");
                     }
                 } else {
                     msgBuilder.append(index++).append("、").append("无出刀记录！").append("\n");
@@ -989,31 +1031,77 @@ public class UnionBattlePlugin extends CQPlugin {
                 battlePersonCount += battleLogs.size() > 1 ? 1 : 0;
                 allMembersBattleLog.put(member, battleLogs);
             }
-            msgBuilder.append("此次会战共有").append(members.size()).append("人参与，其中未出刀人数为").append(members.size() - battlePersonCount)
-                    .append("人，出刀人数为").append(battlePersonCount).append("人；").append("\n")
-                    .append("没有挂过树的人有").append(members.size() - treePersonCount).append("人，挂过树的人有").append(treePersonCount).append("人；").append("\n")
-                    .append("详细信息如下：").append("\n");
+            msgBuilder
+                    .append("此次会战共有")
+                    .append(members.size())
+                    .append("人参与，其中未出刀人数为")
+                    .append(members.size() - battlePersonCount)
+                    .append("人，出刀人数为")
+                    .append(battlePersonCount)
+                    .append("人；")
+                    .append("\n")
+                    .append("没有挂过树的人有")
+                    .append(members.size() - treePersonCount)
+                    .append("人，挂过树的人有")
+                    .append(treePersonCount)
+                    .append("人；")
+                    .append("\n")
+                    .append("详细信息如下：")
+                    .append("\n");
             index = 1;
             msgBuilder.append("所有挂树记录如下：").append("\n");
             for (Member member : members) {
-                msgBuilder.append("==").append(index++).append("、").append(CQCode.at(member.getMemberID()))
-                        .append("一共挂树").append(allMembersTreeList.get(member).size()).append("次，详细挂树记录(按照挂树顺序显示)如下：").append("\n");
+                msgBuilder
+                        .append("==")
+                        .append(index++)
+                        .append("、")
+                        .append(cq.getGroupMemberInfo(groupID, member.getMemberID(), false).getData().getNickname())
+                        .append(" 一共挂树")
+                        .append(allMembersTreeList.get(member).size())
+                        .append("次，详细挂树记录(按照挂树顺序显示)如下：")
+                        .append("\n");
                 index1 = 1;
                 for (TreeList treeList : allMembersTreeList.get(member)) {
-                    msgBuilder.append("  --").append(index1++).append("、").append("在第").append(treeList.getRounds()).append("周目的老")
-                            .append(treeList.getWhichOne()).append("挂树；").append("\n");
+                    msgBuilder
+                            .append("  --")
+                            .append(index1++)
+                            .append("、")
+                            .append("在第")
+                            .append(treeList.getRounds())
+                            .append("周目的老")
+                            .append(treeList.getWhichOne())
+                            .append("挂树；")
+                            .append("\n");
                 }
             }
             index = 1;
             msgBuilder.append("所有出刀记录如下：").append("\n");
             for (Member member : members) {
-                msgBuilder.append("==").append(index++).append("、").append(CQCode.at(member.getMemberID()))
-                        .append("一共出刀").append(allMembersBattleLog.get(member).size()).append("次，详细出刀记录(按照出刀顺序显示)如下：").append("\n");
+                msgBuilder
+                        .append("==")
+                        .append(index++)
+                        .append("、")
+                        .append(cq.getGroupMemberInfo(groupID, member.getMemberID(), false).getData().getNickname())
+                        .append(" 一共出刀")
+                        .append(allMembersBattleLog.get(member).size())
+                        .append("次，详细出刀记录(按照出刀顺序显示)如下：")
+                        .append("\n");
                 index1 = 1;
                 for (BattleLog battleLog : allMembersBattleLog.get(member)) {
-                    msgBuilder.append("  --").append("第").append(index1++).append("刀：于时间").append(sdf.format(battleLog.getBattleDate()))
-                            .append("出刀第").append(battleLog.getRounds()).append("周目的老").append(battleLog.getWhichOne())
-                            .append("，造成伤害：").append(battleLog.getDamage()).append("w；").append("\n");
+                    msgBuilder
+                            .append("  --")
+                            .append("第")
+                            .append(index1++)
+                            .append("刀：于时间")
+                            .append(sdf.format(battleLog.getBattleDate()))
+                            .append("出刀第")
+                            .append(battleLog.getRounds())
+                            .append("周目的老")
+                            .append(battleLog.getWhichOne())
+                            .append("，造成伤害：")
+                            .append(battleLog.getDamage())
+                            .append("w；")
+                            .append("\n");
                 }
             }
             cq.sendGroupMsg(groupID, CQCode.at(userID) + msgBuilder.toString(), false);
