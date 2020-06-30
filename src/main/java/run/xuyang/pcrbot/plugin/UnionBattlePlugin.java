@@ -764,7 +764,7 @@ public class UnionBattlePlugin extends CQPlugin {
                                         bossListService.updateBoss1Status(groupID, bossRemainHP, nextOne);
                                         break;
                                     case 2:
-                                        bossRemainHP = bossList.getBoss1RemainHP();
+                                        bossRemainHP = bossList.getBoss2RemainHP();
                                         if ((bossRemainHP - damage) <= 0) {
                                             bossRemainHP = 0;
                                             nextOne = 3;
@@ -775,7 +775,7 @@ public class UnionBattlePlugin extends CQPlugin {
                                         bossListService.updateBoss2Status(groupID, bossRemainHP, nextOne);
                                         break;
                                     case 3:
-                                        bossRemainHP = bossList.getBoss1RemainHP();
+                                        bossRemainHP = bossList.getBoss3RemainHP();
                                         if ((bossRemainHP - damage) <= 0) {
                                             bossRemainHP = 0;
                                             nextOne = 4;
@@ -786,7 +786,7 @@ public class UnionBattlePlugin extends CQPlugin {
                                         bossListService.updateBoss3Status(groupID, bossRemainHP, nextOne);
                                         break;
                                     case 4:
-                                        bossRemainHP = bossList.getBoss1RemainHP();
+                                        bossRemainHP = bossList.getBoss4RemainHP();
                                         if ((bossRemainHP - damage) <= 0) {
                                             bossRemainHP = 0;
                                             nextOne = 5;
